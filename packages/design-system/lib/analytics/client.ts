@@ -1,10 +1,12 @@
-import { env } from '@repo/env';
 import posthog, { type PostHog } from 'posthog-js';
 
-export const analytics = posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
+const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST;
+
+export const analytics = posthog.init(posthogKey!, {
   api_host: '/ingest',
-  ui_host: env.NEXT_PUBLIC_POSTHOG_HOST,
+  ui_host: posthogHost,
   person_profiles: 'identified_only',
-  capture_pageview: false, // Disable automatic pageview capture, as we capture manually
-  capture_pageleave: true, // Overrides the `capture_pageview` setting
+  capture_pageview: false,
+  capture_pageleave: true,
 }) as PostHog;
